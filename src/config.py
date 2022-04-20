@@ -2,7 +2,6 @@
 # https://github.com/f1linux/pi-ap
 
 import os
-from typing import Any
 
 import yaml
 from pydantic import BaseModel
@@ -20,7 +19,7 @@ class AccessPointConfig(BaseModel):
 
 
 class Config(BaseModel):
-    access_point: AccessPointConfig()
+    access_point: AccessPointConfig = AccessPointConfig()
 
     def load_file(self, path) -> "Config":
         with open(path) as f:
