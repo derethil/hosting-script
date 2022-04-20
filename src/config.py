@@ -1,5 +1,5 @@
-# This file handles the pi-ap script setup and execution.
-# https://github.com/f1linux/pi-ap
+
+
 
 import os
 
@@ -13,24 +13,24 @@ CONFIG_FILE = util.resolve("../config.yaml")
 
 
 class AccessPointConfig(BaseModel):
-    ssid: str = "RPI-AP1"
-    passwd: str = "cH4nG3M3"
-    ipv4subnet: str = "192.168.0.1/28"
+    ssidname: str = "RPI-AP1"
+    apwpa2passwd: str = "cH4nG3M3"
+    ipv4ipwlan0: str = "192.168.0.1/28"
 
 
 class Config(BaseModel):
     access_point: AccessPointConfig = AccessPointConfig()
 
-    def load_file(self, path) -> "Config":
-        with open(path) as f:
+    @classmethod
+    def from_file(cls, file):
+        with open(file) as f:
             contents = f.read()
 
-        return self.parse_obj(yaml.load(contents, Loader=yaml.CLoader))
+        data = yaml.load(contents, Loader=yaml.CLoader)
+        return cls(**data)
 
 
 if os.path.isfile(CONFIG_FILE):
-    config: Config = Config.load_file(Config, CONFIG_FILE)
+    config: Config = Config.from_file(CONFIG_FILE)
 else:
     config = Config()
-
-print(config.access_point.ssid)

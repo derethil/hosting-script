@@ -1,4 +1,4 @@
 access_point:
-  ssid: RPI-AP1
-  passwd: cH4nG3M3
-  ipv4subnet: 192.168.0.1/28
+    ssidname: RPI-AP1LOL
+    apwpa2passwd: cH4nG3M3LOL
+    ipv4ipwlan0: 192.168.0.1/28LOL
