@@ -2,11 +2,12 @@
 
 
 import os
+import logging
 
 import yaml
 from pydantic import BaseModel
 
-import util
+from . import util
 
 
 CONFIG_FILE = util.resolve("../config.yaml")
@@ -31,6 +32,8 @@ class Config(BaseModel):
 
 
 if os.path.isfile(CONFIG_FILE):
+    logging.debug(f"Loading config from {CONFIG_FILE}")
     config: Config = Config.from_file(CONFIG_FILE)
 else:
+    logging.debug(f"No config file found, using defaults")
     config = Config()

@@ -1,12 +1,13 @@
 # This file handles the pi-ap script setup and execution.
 # https://github.com/f1linux/pi-ap
 
+import logging
 import os
 import re
 import subprocess as sp
 
-import util
-from config import config
+from . import util
+from .config import config
 
 PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
@@ -30,6 +31,7 @@ def replace(key: str, value: str) -> None:
         file.seek(0)
         file.write(new_contents)
         file.truncate()
+        logging.debug(f"Replaced {key}='{value}' with {key}='{value}'")
 
 
 def set_variables():
@@ -45,8 +47,31 @@ def set_variables():
 
 # Setup
 
-os.chdir(util.resolve("../"))
-#git_clone = sp.run(["git", "clone", PI_AP_URL])
-os.chdir(util.resolve("../pi-ap/"))
+def install():
+    os.chdir(util.resolve("../"))
+    logging.debug(f"Cloning {PI_AP_URL}")
+    git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
 
-set_variables()
+    try:
+        assert git_clone_cmd.returncode == 0
+    except AssertionError as err:
+        logging.exception("Something went wrong cloning the pi-ap repository")
+        raise err
+
+    os.chdir(util.resolve("../pi-ap/"))
+    set_variables()
+
+    logging.debug("Installing pi-ap from ./install.sh")
+    install_cmd = sp.run("pwd")
+
+    try:
+        assert install_cmd.returncode == 0
+    except AssertionError as err:
+        logging.exception("Something went wrong installing pi-ap")
+        raise err
+
+    os.chdir(util.resolve("../"))
+
+    logging.debug("Removing pi-ap/ directory")
+    sp.run(["rm", "-rf", "pi-ap/"])
+
