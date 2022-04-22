@@ -11,17 +11,12 @@ from .config import config
 
 PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
-def assert_cwd(path: str) -> None:
-    """Asserts the current working directory, raising an exception if not correct"""
-    cwd: str = sp.run("pwd", stdout=sp.PIPE).stdout.decode("utf-8").strip()
-    expected_cwd: str = util.resolve(path)
 
-    assert cwd == expected_cwd, f"Working directory is not the expected {expected_cwd}"
 
 
 def replace(key: str, value: str) -> None:
     """Replaces a single pi-ap config option"""
-    assert_cwd("../pi-ap/")
+    util.assert_cwd("../pi-ap/")
 
     PI_AP_CONFIG = "./variables.sh"
 
