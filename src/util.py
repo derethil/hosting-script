@@ -24,3 +24,9 @@ def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str) -> None:
     except AssertionError as err:
         logging.exception(error_msg)
         raise err
+
+
+def install_pkg(pkg_name: str, *args):
+    """Installs a system package using apt-get"""
+    install_cmd = sp.run(["sudo", "apt-get", "install", pkg_name, *args])
+    validate_cmd(install_cmd, f"Error when installing {pkg_name}")
