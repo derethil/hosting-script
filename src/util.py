@@ -17,8 +17,11 @@ def assert_cwd(expected_abs_path: str) -> None:
         f"Working directory is not the expected {expected_abs_path}"
     )
 
-def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str) -> None:
+def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str = None) -> None:
     """Asserts a finished command completed successfully"""
+    if error_msg is None:
+        error_msg = f"Error on running command: {' '.join(process.args)}"
+
     try:
         assert process.returncode == 0
     except AssertionError as err:
@@ -26,7 +29,7 @@ def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str) -> None:
         raise err
 
 
-def install_pkg(pkg_name: str, *args):
-    """Installs a system package using apt-get"""
-    install_cmd = sp.run(["sudo", "apt-get", "install", pkg_name, *args])
-    validate_cmd(install_cmd, f"Error when installing {pkg_name}")
+def install_pkg(pkg_name: str, service: str = "apt-get", *args):
+    """Installs a system package. Uses apt-get by default."""
+    install_cmd = sp.run(["sudo", service, "install", pkg_name, *args])
+    validate_cmd(install_cmd)

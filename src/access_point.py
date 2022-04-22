@@ -48,7 +48,7 @@ def install():
     logging.debug(f"Cloning {PI_AP_URL}")
     git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
 
-    util.validate_cmd(git_clone_cmd, "Error when cloning the pi-ap repository")
+    util.validate_cmd(git_clone_cmd)
     os.chdir(util.resolve("../pi-ap/"))
 
     # Set config
@@ -58,7 +58,7 @@ def install():
     logging.debug("Installing pi-ap from ./install.sh")
     install_cmd = sp.run("pwd")
 
-    util.validate_cmd(install_cmd, "Error when installing pi-ap")
+    util.validate_cmd(install_cmd, "Error when installing pi-ap from ./install.sh")
 
     # Remove leftover directory
     os.chdir(util.resolve("../"))
