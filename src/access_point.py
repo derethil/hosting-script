@@ -44,29 +44,25 @@ def set_variables():
 
 def install():
     """Handles the install process of pi-ap"""
+
+    # Clone repo
     os.chdir(util.resolve("../"))
     logging.debug(f"Cloning {PI_AP_URL}")
     git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
-    git_clone_cmd = sp.run("pwd")
 
-    try:
-        assert git_clone_cmd.returncode == 0
-    except AssertionError as err:
-        logging.exception("Something went wrong cloning the pi-ap repository")
-        raise err
-
+    util.validate_cmd(git_clone_cmd, "Error when cloning the pi-ap repository")
     os.chdir(util.resolve("../pi-ap/"))
+
+    # Set config
     set_variables()
 
+    # Install
     logging.debug("Installing pi-ap from ./install.sh")
     install_cmd = sp.run("pwd")
 
-    try:
-        assert install_cmd.returncode == 0
-    except AssertionError as err:
-        logging.exception("Something went wrong installing pi-ap")
-        raise err
+    util.validate_cmd(install_cmd, "Error when installing pi-ap")
 
+    # Remove leftover directory
     os.chdir(util.resolve("../"))
 
     logging.debug("Removing pi-ap/ directory")

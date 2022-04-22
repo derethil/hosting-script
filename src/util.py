@@ -1,3 +1,4 @@
+import logging
 import os
 import traceback as tb
 import subprocess as sp
@@ -15,3 +16,11 @@ def assert_cwd(expected_abs_path: str) -> None:
     assert cwd == expected_abs_path, (
         f"Working directory is not the expected {expected_abs_path}"
     )
+
+def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str) -> None:
+    """Asserts a finished command completed successfully"""
+    try:
+        assert process.returncode == 0
+    except AssertionError as err:
+        logging.exception(error_msg)
+        raise err
