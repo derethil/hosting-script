@@ -15,8 +15,8 @@ PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
 
 def replace(key: str, value: str) -> None:
-    """Replaces a single pi-ap config option"""
-    util.assert_cwd("../pi-ap/")
+    """Writes a single config value to variables.sh"""
+    util.assert_cwd(util.resolve("../pi-ap/"))
 
     PI_AP_CONFIG = "./variables.sh"
 
@@ -30,8 +30,8 @@ def replace(key: str, value: str) -> None:
 
 
 def set_variables():
-    """Sets pi-ap's variables to config values"""
-    assert_cwd("../pi-ap/")
+    """Writes to pi-ap's variables.sh to match config values"""
+    util.assert_cwd(util.resolve("../pi-ap/"))
 
     CONFIG_KEY = "access_point"
     config_dict: dict[str, str] = config.dict()[CONFIG_KEY]
@@ -43,9 +43,11 @@ def set_variables():
 # Setup
 
 def install():
+    """Handles the install process of pi-ap"""
     os.chdir(util.resolve("../"))
     logging.debug(f"Cloning {PI_AP_URL}")
     git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
+    git_clone_cmd = sp.run("pwd")
 
     try:
         assert git_clone_cmd.returncode == 0

@@ -8,9 +8,10 @@ def resolve(path: str) -> str:
     dirname = os.path.dirname(stack[-2].filename)
     return os.path.abspath(os.path.join(dirname, path))
 
-def assert_cwd(path: str) -> None:
-    """Asserts the current working directory, raising an exception if not correct"""
+def assert_cwd(expected_abs_path: str) -> None:
+    """Asserts the current working directory"""
     cwd: str = sp.run("pwd", stdout=sp.PIPE).stdout.decode("utf-8").strip()
-    expected_cwd: str = util.resolve(path)
 
-    assert cwd == expected_cwd, f"Working directory is not the expected {expected_cwd}"
+    assert cwd == expected_abs_path, (
+        f"Working directory is not the expected {expected_abs_path}"
+    )
