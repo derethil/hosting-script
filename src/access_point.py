@@ -12,9 +12,7 @@ from .config import config
 PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
 
-
-
-def replace(key: str, value: str) -> None:
+def set_config_option(key: str, value: str) -> None:
     """Writes a single config value to variables.sh"""
     util.assert_cwd(util.resolve("../pi-ap/"))
 
@@ -29,7 +27,7 @@ def replace(key: str, value: str) -> None:
         logging.debug(f"Replaced {key}='{value}' with {key}='{value}'")
 
 
-def set_variables():
+def set_config():
     """Writes to pi-ap's variables.sh to match config values"""
     util.assert_cwd(util.resolve("../pi-ap/"))
 
@@ -37,7 +35,7 @@ def set_variables():
     config_dict: dict[str, str] = config.dict()[CONFIG_KEY]
 
     for key, value in config_dict.items():
-        replace(key.upper(), value)
+        set_config_option(key.upper(), value)
 
 
 # Setup
@@ -54,7 +52,7 @@ def install():
     os.chdir(util.resolve("../pi-ap/"))
 
     # Set config
-    set_variables()
+    set_config()
 
     # Install
     logging.debug("Installing pi-ap from ./install.sh")
