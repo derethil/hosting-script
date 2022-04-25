@@ -21,6 +21,10 @@ def assert_cwd(expected_abs_path: str) -> None:
         f"Working directory is not the expected {expected_abs_path}"
     )
 
+def sudo(cmd: str) -> sp.CompletedProcess:
+    args = cmd.split(" ")
+    return sp.run(["sudo", *args])
+
 def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str = None) -> None:
     """Asserts a finished command completed successfully"""
     if error_msg is None:

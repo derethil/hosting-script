@@ -1,6 +1,7 @@
 import logging
 import os
 import subprocess as sp
+import shutil
 
 
 from . import util
@@ -15,13 +16,92 @@ def main():
     util.install_pkg("flask", service="pip", sudo=True)
     util.install_pkg("uwsgi", service="pip", sudo=True)
 
-    # Flask setup
+    # Server directory setup
     path = config.web_server.directory
 
     os.chdir(path.expanduser().parent)
     os.mkdir(path.name)
-    sp.run(["sudo", "chown", "www-data", path.name])
-    os.chdir(path)
+    util.sudo(f"chown www-data f{path.name}")
+    os.chdir(path.expanduser())
+
+    shutil.copy(util.resolve_relative("../files/app.py"), "app.py")
+    shutil.copy(util.resolve_relative("../files/uwsgi.ini"), "uwsgi.ini")
+
+    # uWSGI setup
+    with open("uwsgi.ini", "r+") as file:
+        contents = file.read()
+
+        contents = contents.replace(
+            "chdir = /home/pi/flasktest",
+            f"chdir = {path.expanduser()}"
+        )
+
+        contents = contents.replace(
+            "flasktest.sock",
+            f"{path.name}.sock"
+        )
+
+        file.seek(0)
+        file.write(contents)
+        file.truncate()
+
+    # NGINX Setup
+    shutil.copy(
+        util.resolve_relative("../files/server_proxy_init"),
+        util.resolve_relative("../files/server_proxy")
+    )
+
+    with open("server_proxy", "r+") as file:
+        contents = file.read()
+
+        contents = contents.replace(
+            "/tmp/flasktest.sock;",
+            f"/tmp/{path.name}.sock"
+        )
+
+        file.seek(0)
+        file.write(contents)
+        file.truncate()
+
+    util.sudo("rm /etc/nginx/sites-enabled/default")
+    util.sudo(f"mv {util.resolve_relative('../files/server_proxy')} /etc/nginx/sites-available/{path.name}_proxy")
+    util.sudo(f"ln -s /etc/nginx/sites-available/{path.name}_proxy /etc/nginx/sites-enabled")
+    util.sudo("systemctl restart nginx")
+
+    # Run uWSGI when the Pi boots
+
+    shutil.copy(
+        util.resolve_relative("../files/uwsgi.service_init"),
+        util.resolve_relative("../files/uwsgi.service")
+    )
+
+    with open(util.resolve_relative("../files/uwsgi.service"), "r+") as file:
+        contents = file.read()
+
+        contents = contents.replace(
+            "/home/pi/flasktest",
+            f"{path.expanduser()}"
+        )
+
+        file.seek(0)
+        file.write(contents)
+        file.truncate()
+
+    util.sudo(f"mv {util.resolve_relative('../files/uwsgi.service')} /etc/systemd/system/uwsgi.service")
+    util.sudo("systemctl daemon-reload")
+    util.sudo("systemctl start uwsgi.service")
+    util.sudo("systemctl enable uwsgi.service")
+
+
+
+
+
+
+
+
+
+
+
 
 
 
