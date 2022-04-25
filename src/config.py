@@ -19,6 +19,7 @@ class AccessPointConfig(BaseModel):
     ipv4ipwlan0: str = "192.168.0.1/28"
 
 class WebServerConfig(BaseModel):
+    pass
     # existing_flask_app: bool = False
     # flask_app_path: str = "~/WebServer"
     # entry_point: str = "hello:app"
