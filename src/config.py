@@ -18,9 +18,16 @@ class AccessPointConfig(BaseModel):
     apwpa2passwd: str = "cH4nG3M3"
     ipv4ipwlan0: str = "192.168.0.1/28"
 
+class WebServerConfig(BaseModel):
+    # existing_flask_app: bool = False
+    # flask_app_path: str = "~/WebServer"
+    # entry_point: str = "hello:app"
+    # virtual_environment_dir: str = ".venv"
+
 
 class Config(BaseModel):
     access_point: AccessPointConfig = AccessPointConfig()
+    web_server: WebServerConfig = WebServerConfig()
 
     @classmethod
     def from_file(cls, file):
