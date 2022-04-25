@@ -10,17 +10,23 @@ from .config import config
 logging.basicConfig(level=logging.DEBUG)
 
 def main():
-    # Create Virtual Environment
+    # Install dependencies
+    util.install_pkg("nginx", service="apt-get", sudo=True)
+    util.install_pkg("flask", service="pip", sudo=True)
+    util.install_pkg("uwsgi", service="pip", sudo=True)
 
-    if config.web_server.existing_flask_app:
-        os.chdir(util.resolve_home(config.web_server.flask_app_path))
+    # Flask setup
+    path = config.web_server.directory
 
-    else:
-        os.chdir(util.resolve_home("~/"))
-        os.mkdir("WebServer")
-        os.chdir("./WebServer")
+    os.chdir(path.expanduser().parent)
+    os.mkdir(path.name)
+    sp.run(["sudo", "chown", "www-data", path.name])
+    os.chdir(path)
 
-    util.install_pkg("flask", service="pip")
-    util.install_pkg("nginx")
+
+
+
+
+
 
     breakpoint()
