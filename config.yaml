@@ -5,4 +5,4 @@ access_point:
         # Subnet for the wifi network.
         # This doesn't matter much if you plan to keep your Pi disconnected from the internet but
         # make sure it's different than the one it's currently connected to during installation.
-    ourhostname: "pi-server" # Hostname of the Pi after installation
+    ourhostname: pi-server # Hostname of the Pi after installation

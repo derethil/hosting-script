@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from . import util
 
 
-CONFIG_FILE = util.resolve("../config.yaml")
+CONFIG_FILE = util.resolve_relative("../config.yaml")
 
 
 class AccessPointConfig(BaseModel):

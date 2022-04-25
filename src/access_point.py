@@ -14,7 +14,7 @@ PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
 def set_config_option(key: str, value: str) -> None:
     """Writes a single config value to variables.sh"""
-    util.assert_cwd(util.resolve("../pi-ap/"))
+    util.assert_cwd(util.resolve_relative("../pi-ap/"))
 
     PI_AP_CONFIG = "./variables.sh"
 
@@ -29,7 +29,7 @@ def set_config_option(key: str, value: str) -> None:
 
 def set_config():
     """Writes to pi-ap's variables.sh to match config values"""
-    util.assert_cwd(util.resolve("../pi-ap/"))
+    util.assert_cwd(util.resolve_relative("../pi-ap/"))
 
     CONFIG_KEY = "access_point"
     config_dict: dict[str, str] = config.dict()[CONFIG_KEY]
@@ -44,12 +44,12 @@ def install():
     """Handles the install process of pi-ap"""
 
     # Clone repo
-    os.chdir(util.resolve("../"))
+    os.chdir(util.resolve_relative("../"))
     logging.debug(f"Cloning {PI_AP_URL}")
     git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
 
     util.validate_cmd(git_clone_cmd)
-    os.chdir(util.resolve("../pi-ap/"))
+    os.chdir(util.resolve_relative("../pi-ap/"))
 
     # Set config
     set_config()
@@ -61,7 +61,7 @@ def install():
     util.validate_cmd(install_cmd, "Error when installing pi-ap from ./install.sh")
 
     # Remove leftover directory
-    os.chdir(util.resolve("../"))
+    os.chdir(util.resolve_relative("../"))
 
     logging.debug("Removing pi-ap/ directory")
     sp.run(["rm", "-rf", "pi-ap/"])
