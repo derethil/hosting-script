@@ -4,7 +4,7 @@ import shutil
 
 
 from . import util
-from .access_point import install
+from . import access_point
 from .config import config
 
 logging.basicConfig(level=logging.DEBUG)
@@ -15,6 +15,7 @@ def main():
     util.install_pkg("nginx", service="apt-get", sudo=True)
     util.install_pkg("flask", service="pip", sudo=True)
     util.install_pkg("uwsgi", service="pip", sudo=True)
+    util.print_info("installing dependencies finished")
 
     # Server directory setup
     path = config.web_server.directory
@@ -23,8 +24,10 @@ def main():
     os.mkdir(path.name)
     util.sudo(f"chown www-data {path.name}")
     os.chdir(path.expanduser())
+    util.print_info("server directory created")
 
     # uWSGI setup
+    util.print_info("uwsgi.ini setup")
     with open(util.resolve_relative("../files/uwsgi.ini"), "r+") as file:
         contents = file.read()
 
@@ -45,6 +48,8 @@ def main():
     util.sudo(f"cp {util.resolve_relative('../files/app.py')} app.py")
     util.sudo(f"cp {util.resolve_relative('../files/uwsgi.ini')} uwsgi.ini")
 
+    util.print_info("server files setup")
+
     # NGINX Setup
     shutil.copy(
         util.resolve_relative("../files/server_proxy_init"),
@@ -63,10 +68,14 @@ def main():
         file.write(contents)
         file.truncate()
 
+    util.print_info("reverse proxy created")
+
     util.sudo("rm /etc/nginx/sites-enabled/default")
     util.sudo(f"mv {util.resolve_relative('../files/server_proxy')} /etc/nginx/sites-available/{path.name}_proxy")
     util.sudo(f"ln -s /etc/nginx/sites-available/{path.name}_proxy /etc/nginx/sites-enabled")
     util.sudo("systemctl restart nginx")
+
+    util.print_info("nginx setup complete")
 
     # Run uWSGI when the Pi boots
 
@@ -92,4 +101,8 @@ def main():
     util.sudo("systemctl start uwsgi.service")
     util.sudo("systemctl enable uwsgi.service")
 
-    breakpoint()
+    util.print_info("uwsgi setup complete")
+
+    access_point.install()
+
+    util.print_info("Script complete!")

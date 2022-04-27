@@ -2,7 +2,7 @@ import logging
 import os
 import traceback as tb
 import subprocess as sp
-
+import print_color
 def resolve_relative(path: str) -> str:
     """Resolves relative paths into absolute paths based on caller's location"""
     stack = tb.extract_stack()
@@ -42,3 +42,6 @@ def install_pkg(pkg_name: str, service: str = "apt-get", sudo: bool = False, *ar
     arg_list = [service, "install", pkg_name, *args]
     install_cmd = sp.run(["sudo", *arg_list] if sudo else [*arg_list])
     validate_cmd(install_cmd)
+
+def print_info(msg: str):
+    print_color.print(f"\n{msg}\n", tag="info", tag_color="green", format="bold", color="white")
