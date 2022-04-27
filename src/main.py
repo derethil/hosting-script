@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 def main():
     # Install dependencies
+    util.install_pkg("python3-pip", service="apt-get", sudo=True)
     util.install_pkg("nginx", service="apt-get", sudo=True)
     util.install_pkg("flask", service="pip", sudo=True)
     util.install_pkg("uwsgi", service="pip", sudo=True)
