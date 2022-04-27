@@ -2,6 +2,7 @@ import logging
 import os
 import subprocess as sp
 import shutil
+import sys
 
 
 from . import util
@@ -11,6 +12,13 @@ from .config import config
 logging.basicConfig(level=logging.DEBUG)
 
 def main():
+    if os.geteuid() == 0:
+        print("We're root!")
+    else:
+        print("We're not root.")
+        sp.call(['sudo', 'python3', *sys.argv])
+        sys.exit()
+
     # Install dependencies
     util.install_pkg("python3-pip", service="apt-get", sudo=True)
     util.install_pkg("nginx", service="apt-get", sudo=True)
@@ -22,14 +30,11 @@ def main():
 
     os.chdir(path.expanduser().parent)
     os.mkdir(path.name)
-    util.sudo(f"chown www-data f{path.name}")
+    util.sudo(f"chown www-data {path.name}")
     os.chdir(path.expanduser())
 
-    shutil.copy(util.resolve_relative("../files/app.py"), "app.py")
-    shutil.copy(util.resolve_relative("../files/uwsgi.ini"), "uwsgi.ini")
-
     # uWSGI setup
-    with open("uwsgi.ini", "r+") as file:
+    with open(util.resolve_relative("../files/uwsgi.ini"), "r+") as file:
         contents = file.read()
 
         contents = contents.replace(
@@ -46,13 +51,16 @@ def main():
         file.write(contents)
         file.truncate()
 
+    util.sudo(f"cp {util.resolve_relative('../files/app.py')} app.py")
+    util.sudo(f"cp {util.resolve_relative('../files/uwsgi.ini')} uwsgi.ini")
+
     # NGINX Setup
     shutil.copy(
         util.resolve_relative("../files/server_proxy_init"),
         util.resolve_relative("../files/server_proxy")
     )
 
-    with open("server_proxy", "r+") as file:
+    with open(util.resolve_relative("../files/server_proxy"), "r+") as file:
         contents = file.read()
 
         contents = contents.replace(
