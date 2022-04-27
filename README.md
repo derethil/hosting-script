@@ -46,10 +46,9 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
 6. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
 
-   > **_NOTE_**: You'll have to restart the shell or reconnect via ssh (depending on how you're running commands on the Pi) after installation to add `poetry` to your 'PATH'. Make sure you `cd` back into the `hosting-script` directory.
-
    ```shell
    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+   $ source $HOME/.poetry/env
    $ poetry shell
    $ poetry install
    ```

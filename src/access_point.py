@@ -57,7 +57,7 @@ def install():
 
     # Install
     logging.debug("Installing pi-ap from ./install.sh")
-    install_cmd = sp.run("./install.sh")
+    install_cmd = util.sudo("./install.sh")
 
     util.validate_cmd(install_cmd, "Error when installing pi-ap from ./install.sh")
 
