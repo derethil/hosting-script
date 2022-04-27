@@ -31,8 +31,8 @@ python-versions = ">=3.7"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.10"
-content-hash = "054afca4b2a6d532ffeb74afcd9438c1633309a867e7fa4219303218b872b5c5"
+python-versions = "^3.9"
+content-hash = "a26b8fb9a169fe1436584d1a5d874b4c5808d9312081102adadd83b8a4ef6e60"
 
 [metadata.files]
 pydantic = [

@@ -39,5 +39,6 @@ def validate_cmd(process: sp.CompletedProcess[bytes], error_msg: str = None) -> 
 
 def install_pkg(pkg_name: str, service: str = "apt-get", sudo: bool = False, *args):
     """Installs a system package. Uses apt-get by default."""
-    install_cmd = sp.run([sudo, service, "install", pkg_name, *args])
+    sudo_str = "" if sudo else "sudo"
+    install_cmd = sp.run([sudo_str, service, "install", pkg_name, *args])
     validate_cmd(install_cmd)
