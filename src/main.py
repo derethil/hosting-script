@@ -1,8 +1,6 @@
 import logging
 import os
-import subprocess as sp
 import shutil
-import sys
 
 
 from . import util
@@ -12,13 +10,6 @@ from .config import config
 logging.basicConfig(level=logging.DEBUG)
 
 def main():
-    if os.geteuid() == 0:
-        print("We're root!")
-    else:
-        print("We're not root.")
-        sp.call(['sudo', 'python3', *sys.argv])
-        sys.exit()
-
     # Install dependencies
     util.install_pkg("python3-pip", service="apt-get", sudo=True)
     util.install_pkg("nginx", service="apt-get", sudo=True)
