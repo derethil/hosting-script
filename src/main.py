@@ -27,7 +27,6 @@ def main():
     util.print_info("server directory created")
 
     # uWSGI setup
-    util.print_info("uwsgi.ini setup")
     with open(util.resolve_relative("../files/uwsgi.ini"), "r+") as file:
         contents = file.read()
 

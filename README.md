@@ -4,7 +4,9 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
 ## Usage:
 
-1. Update your raspberry pi.
+1. Connect your Pi to the internet via **Ethernet** cable (Pi-AP requires this and will fail if not connected this way).
+
+2. Update your raspberry pi.
 
    ```shell
     $ sudo apt-get update
@@ -14,16 +16,21 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
    While not strictly required, this is always a good step to take before doing anything on a Pi.
 
-2. Connect your Pi to the internet via **Ethernet** cable (Pi-AP requires this and will fail if not connected this way).
-
-3. Clone this repository.
+3. Install `git` and `python3-pip`.
 
    ```shell
-   $ git clone git@github.com:jarenglenn/hosting-script.git
+   $ sudo apt-get install git
+   $ sudo apt-get install python3-pip
+   ```
+
+4. Clone this repository.
+
+   ```shell
+   $ git clone https://github.com/jarenglenn/hosting-script.git
    $ cd ./hosting-script
    ```
 
-4. Change the default config values located in `./config.yaml`.
+5. Change the default config values located in `./config.yaml`.
 
    Config values are explained in the config file.
 
@@ -37,7 +44,9 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    >  userexecutingscript: user
    > ```
 
-5. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
+6. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
+
+   > **_NOTE_**: You'll have to restart the shell or reconnect via ssh (depending on how you're running commands on the Pi) after installation to add `poetry` to your 'PATH'. Make sure you `cd` back into the `hosting-script` directory.
 
    ```shell
    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
@@ -45,7 +54,7 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    $ poetry install
    ```
 
-6. Run the script
+7. Run the script
    ```shell
    $ poetry run hosting_script
    ```

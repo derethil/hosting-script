@@ -44,4 +44,6 @@ def install_pkg(pkg_name: str, service: str = "apt-get", sudo: bool = False, *ar
     validate_cmd(install_cmd)
 
 def print_info(msg: str):
-    print_color.print(f"\n{msg}\n", tag="info", tag_color="green", format="bold", color="white")
+    print()
+    print_color.print(f"{msg}", tag="info", tag_color="green", format="bold", color="white")
+    print()
