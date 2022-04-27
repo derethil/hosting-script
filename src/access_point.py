@@ -53,6 +53,7 @@ def install():
 
     # Set config
     set_config()
+    util.print_info("pi-ap cloned and configured")
 
     # Install
     logging.debug("Installing pi-ap from ./install.sh")
@@ -65,4 +66,6 @@ def install():
 
     logging.debug("Removing pi-ap/ directory")
     sp.run(["rm", "-rf", "pi-ap/"])
+
+    util.print_info("pi-ap successfully executed")
 
