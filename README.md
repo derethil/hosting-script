@@ -37,4 +37,15 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    >  userexecutingscript: user
    > ```
 
-5.
+5. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
+
+   ```shell
+   $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+   $ poetry shell
+   $ poetry install
+   ```
+
+6. Run the script
+   ```shell
+   $ poetry run hosting_script
+   ```

@@ -13,7 +13,7 @@ pydantic = "^1.9.0"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-host = "src.main:main"
+hosting_script = "src.main:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
