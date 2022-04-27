@@ -56,7 +56,7 @@ def main():
 
         contents = contents.replace(
             "/tmp/flasktest.sock;",
-            f"/tmp/{path.name}.sock"
+            f"/tmp/{path.name}.sock;"
         )
 
         file.seek(0)
@@ -91,22 +91,5 @@ def main():
     util.sudo("systemctl daemon-reload")
     util.sudo("systemctl start uwsgi.service")
     util.sudo("systemctl enable uwsgi.service")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     breakpoint()
