@@ -14,7 +14,7 @@ PI_AP_URL = "https://github.com/f1linux/pi-ap"
 
 def set_config_option(key: str, value: str) -> None:
     """Writes a single config value to variables.sh"""
-    util.assert_cwd(util.resolve_relative("../pi-ap/"))
+    util.assert_cwd(util.resolve_home("~/pi-ap/"))
 
     PI_AP_CONFIG = "./variables.sh"
 
@@ -29,7 +29,7 @@ def set_config_option(key: str, value: str) -> None:
 
 def set_config():
     """Writes to pi-ap's variables.sh to match config values"""
-    util.assert_cwd(util.resolve_relative("../pi-ap/"))
+    util.assert_cwd(util.resolve_home("~/pi-ap/"))
 
     CONFIG_KEY = "access_point"
     config_dict: dict[str, str] = config.dict()[CONFIG_KEY]
