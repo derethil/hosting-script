@@ -47,7 +47,7 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
    Config values are explained in the config file.
 
-   > **_NOTE_**: Pi-AP offers many different configuration values for the access point and while most can likely be left as default, they can optionally be configured simply by adding them to this tool's `config.yaml` file under `access_point`. For example, to change the value of `USEREXECUTINGSCRIPT='pi'`:
+   > **_NOTE_**: Pi-AP offers many different configuration values for the access point and while most can likely be left as default, they can optionally be configured  by adding them to this tool's `config.yaml` file under `access_point`. For example, to change the value of `USEREXECUTINGSCRIPT='pi'`:
    >
    > ```yaml
    > access_point:
@@ -61,3 +61,5 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    ```shell
    $ poetry run hosting_script
    ```
+   
+8. You should now be able to connect to the Pi using the access point information you provided in `config.yaml` and then up the webpage using the value of`ipv4ipwlan0`(without the subnet modifier). 
