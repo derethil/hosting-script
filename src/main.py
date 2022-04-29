@@ -35,7 +35,7 @@ def main():
 
     configure_file(resolve_relative("../files/uwsgi.ini"),
         old="flasktest.sock",
-        new="f{path.name}.sock"
+        new=f"{path.name}.sock"
     )
 
     sudo(f"cp {resolve_relative('../files/app.py')} app.py")
