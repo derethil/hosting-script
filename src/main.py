@@ -10,8 +10,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 def main():
     # Install dependencies
-    install_pkg("ufw", sudo=True)
-    install_pkg("nginx", sudo=True)
+    install_pkg("ufw", "--assume-yes", sudo=True)
+    install_pkg("nginx", "--assume-yes", sudo=True)
     install_pkg("flask", service="pip", sudo=True)
     install_pkg("uwsgi", service="pip", sudo=True)
 
