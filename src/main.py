@@ -10,7 +10,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 def main():
     # Install dependencies
-    install_pkg("nginx", service="apt-get", sudo=True)
+    install_pkg("ufw", sudo=True)
+    install_pkg("nginx", sudo=True)
     install_pkg("flask", service="pip", sudo=True)
     install_pkg("uwsgi", service="pip", sudo=True)
 
@@ -43,7 +44,7 @@ def main():
     print_info("server files setup")
 
     # NGINX Setup
-    shutil.shcopy(
+    shutil.copy(
         resolve_relative("../files/server_proxy_init"),
         resolve_relative("../files/server_proxy")
     )
@@ -64,7 +65,7 @@ def main():
 
     # Run uWSGI when the Pi boots
 
-    shutil.shcopy(
+    shutil.copy(
         resolve_relative("../files/uwsgi.service_init"),
         resolve_relative("../files/uwsgi.service")
     )

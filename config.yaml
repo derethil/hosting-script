@@ -4,7 +4,7 @@ access_point:
     ipv4ipwlan0: 192.168.0.1/28
         # Subnet for the wifi network.
         # This doesn't matter much if you plan to keep your Pi disconnected from the internet but
-        # make sure it's different than the one it's currently connected to during installation.
+        # make sure it does not conflict with the subnet it's connected to during installation.
     ourhostname: pi-server # Hostname of the Pi after installation
 
 web_server:

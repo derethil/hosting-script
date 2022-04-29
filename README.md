@@ -16,17 +16,17 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
    While not strictly required, this is always a good step to take before doing anything on a Pi.
 
-3. Install `git` and `python3-pip`.
+3. Install `git`, `python3-pip` and `python3-venv`.
 
    ```shell
-   $ sudo apt-get install git python3-pip
+   $ sudo apt-get install git python3-pip python3-venv
    ```
 
 4. Clone this repository.
 
    ```shell
    $ git clone https://github.com/jarenglenn/hosting-script.git
-   $ cd ./hosting-script
+   $ cd hosting-script
    ```
 
 5. Change the default config values located in `./config.yaml`.
@@ -52,7 +52,10 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    $ poetry install
    ```
 
-   > **_NOTE_**: You'll want to add `export PATH="/home/pi/.local/bin:$PATH"` to `/home/pi/.bashrc` if you want to run Poetry in the future.
+   > **_NOTE_**:
+   >
+   > - You'll want to add `export PATH="/home/pi/.local/bin:$PATH"` to `/home/pi/.bashrc` if you want to run Poetry in the future.
+   > - `poetry shell` is a very buggy command so if you run into problems you may need to activate the virtualenv using `source $(poetry env info --path)/bin/activate` instead.
 
 7. Run the script
    ```shell
