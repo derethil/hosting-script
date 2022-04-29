@@ -29,8 +29,8 @@ def main():
     # uWSGI setup
 
     configure_file(resolve_relative("../files/uwsgi.ini"),
-        old="chdir = /home/pi/flasktest",
-        new=f"chdir = {path.expanduser()}"
+        old="/home/pi/flasktest",
+        new=f"{path.expanduser()}"
     )
 
     configure_file(resolve_relative("../files/uwsgi.ini"),
