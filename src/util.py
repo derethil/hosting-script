@@ -47,3 +47,13 @@ def print_info(msg: str):
     print()
     print_color.print(f"{msg}", tag="info", tag_color="green", format="bold", color="white")
     print()
+
+def configure_file(path: str, *, old: str, new: str) -> None:
+    with open(path, "r+") as file:
+        contents = file.read()
+
+        contents = contents.replace(old, new)
+
+        file.seek(0)
+        file.write(contents)
+        file.truncate()
