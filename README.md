@@ -29,21 +29,7 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    $ cd hosting-script
    ```
 
-5. Change the default config values located in `./config.yaml`.
-
-   Config values are explained in the config file.
-
-   > **_NOTE_**: Pi-AP offers many different configuration values for the access point and while most can likely be left as default, they can optionally be configured simply by adding them to this tool's `config.yaml` file under `access_point`. For example, to change the value of `USEREXECUTINGSCRIPT='pi'`:
-   >
-   > ```yaml
-   > access_point:
-   >  ssidname: RPI-AP1 # SSID of the new wifi network
-   >  apwpa2passwd: cH4nG3M3 # Wifi network password
-   >  ...
-   >  userexecutingscript: user
-   > ```
-
-6. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
+5. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
 
    ```shell
    $ curl -sSL https://install.python-poetry.org | python3 -
@@ -56,6 +42,20 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
    >
    > - You'll want to add `export PATH="/home/pi/.local/bin:$PATH"` to `/home/pi/.bashrc` if you want to run Poetry in the future.
    > - `poetry shell` is a very buggy command so if you run into problems you may need to activate the virtualenv using `source $(poetry env info --path)/bin/activate` instead.
+
+6. Change the default config values located in `./config.yaml`.
+
+   Config values are explained in the config file.
+
+   > **_NOTE_**: Pi-AP offers many different configuration values for the access point and while most can likely be left as default, they can optionally be configured simply by adding them to this tool's `config.yaml` file under `access_point`. For example, to change the value of `USEREXECUTINGSCRIPT='pi'`:
+   >
+   > ```yaml
+   > access_point:
+   >  ssidname: RPI-AP1 # SSID of the new wifi network
+   >  apwpa2passwd: cH4nG3M3 # Wifi network password
+   >  ...
+   >  userexecutingscript: user
+   > ```
 
 7. Run the script
    ```shell
