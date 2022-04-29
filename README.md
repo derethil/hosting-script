@@ -16,10 +16,10 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 
    While not strictly required, this is always a good step to take before doing anything on a Pi.
 
-3. Install `git`, `python3-pip` and `python3-venv`.
+3. Install `git`, `python3-pip`, `python3-venv`, and `libyaml-dev`.
 
    ```shell
-   $ sudo apt-get install git python3-pip python3-venv
+   $ sudo apt-get install git python3-pip python3-venv libyaml-dev
    ```
 
 4. Clone this repository.

@@ -45,12 +45,12 @@ def install():
     util.sudo("raspi-config nonint do_wifi_country US")
 
     # Clone repo
-    os.chdir(util.resolve_relative("../"))
+    os.chdir(util.resolve_home("~"))
     logging.debug(f"Cloning {PI_AP_URL}")
     git_clone_cmd = sp.run(["git", "clone", PI_AP_URL])
 
     util.validate_cmd(git_clone_cmd)
-    os.chdir(util.resolve_relative("../pi-ap/"))
+    os.chdir(util.resolve_home("~/pi-ap/"))
 
     # Set config
     set_config()
