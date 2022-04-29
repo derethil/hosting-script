@@ -19,8 +19,7 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 3. Install `git` and `python3-pip`.
 
    ```shell
-   $ sudo apt-get install git
-   $ sudo apt-get install python3-pip
+   $ sudo apt-get install git python3-pip
    ```
 
 4. Clone this repository.
@@ -47,11 +46,13 @@ When used on a raspberry pi, this tool automates most of the config and setup fo
 6. Set up the virtualenv using [Poetry](https://python-poetry.org/) and install Python dependencies:
 
    ```shell
-   $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-   $ source $HOME/.poetry/env
+   $ curl -sSL https://install.python-poetry.org | python3 -
+   $ export PATH="/home/pi/.local/bin:$PATH"
    $ poetry shell
    $ poetry install
    ```
+
+   > **_NOTE_**: You'll want to add `export PATH="/home/pi/.local/bin:$PATH"` to `/home/pi/.bashrc` if you want to run Poetry in the future.
 
 7. Run the script
    ```shell

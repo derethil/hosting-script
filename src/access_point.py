@@ -42,6 +42,7 @@ def set_config():
 
 def install():
     """Handles the install process of pi-ap"""
+    util.sudo("raspi-config nonint do_wifi_country US")
 
     # Clone repo
     os.chdir(util.resolve_relative("../"))

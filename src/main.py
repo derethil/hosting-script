@@ -12,9 +12,6 @@ logging.basicConfig(level=logging.DEBUG)
 def main():
     # Install dependencies
     util.install_pkg("nginx", service="apt-get", sudo=True)
-    util.install_pkg("hostapd", service="apt-get", sudo=True)
-    util.install_pkg("dhcpcd5", service="apt-get", sudo=True)
-    util.install_pkg("dnsmasq", service="apt-get", sudo=True)
     util.install_pkg("flask", service="pip", sudo=True)
     util.install_pkg("uwsgi", service="pip", sudo=True)
 
